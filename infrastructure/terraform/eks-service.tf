@@ -1,14 +1,11 @@
 resource "kubernetes_service" "kubeservice" {
-metadata 
-{
+metadata {
 name = "wordpress"
-labels = 
-{
+labels = {
 "app" = "wordpress"
 }
 }
-spec 
-{
+spec {
 selector = {
 "app" = "wordpress"
 "tier"= "frontend"
@@ -31,19 +28,16 @@ labels = {
 "app" = "wordpress"
 }
 }
-spec 
-{
+spec {
 access_modes = ["ReadWriteOnce"]
-resources 
-{
+resources {
 requests = {
 storage = "1Gi"
 }
 }
 }
 depends_on = [aws_eks_node_group.eks-ng]
-timeouts 
-{
+timeouts {
 create = "15m"
 }
 }
@@ -56,8 +50,7 @@ labels = {
 }
 spec {
 replicas = 1
-selector 
-{
+selector {
 match_labels = {
 "app" = "wordpress"
 "tier"= "frontend"
@@ -66,8 +59,7 @@ match_labels = {
 strategy {
 type = "Recreate"
 }
-template 
-{
+template {
 metadata {
 labels = {
 "app" = "wordpress"
@@ -78,8 +70,7 @@ spec {
 container {
 image = "wordpress"
 name  = "wordpress"
-env 
-{
+env {
 name = "WORDPRESS_DB_NAME"
 value= aws_db_instance.rdsinstance.name
 }
