@@ -1,6 +1,6 @@
 resource "kubernetes_service" "kubeservice" {
 metadata {
-name = "wordpress."
+name = "wordpress"
 labels = {
 "app" = "wordpress"
 }
